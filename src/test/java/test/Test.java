@@ -1,54 +1,37 @@
 package test;
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.PBEParameterSpec;
-import java.util.Base64;
-import java.util.Random;
+import org.junit.jupiter.api.DisplayName;
+
+import java.security.Provider;
+import java.security.Security;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
 public class Test {
-    public static void main(String[] args) throws Exception {
-        Cipher cipher0 = Cipher.getInstance("PBEWithMD5AndDESede");
-        Cipher cipher01 = Cipher.getInstance("PBEWithMD5AndDES");
-        Cipher cipher02 = Cipher.getInstance("PBEWithHmacSHA256AndAES_128");
-        Cipher cipher03 = Cipher.getInstance("PBEWithHmacSHA256AndAES_256");
 
-        byte[] input = "an toan bao mat he thong thong tin".getBytes();
+    @DisplayName("test")
+    @org.junit.jupiter.api.Test
+    public void test() {
+        listAlgorithm("Cipher.PBEWith");
+    }
 
-        // encrypt
-        String password = "javapapers";
-        PBEKeySpec pbeKeySpec = new PBEKeySpec(password.toCharArray());
-        SecretKeyFactory secretKeyFactory = SecretKeyFactory
-                .getInstance("PBEWithMD5AndTripleDES");
-        SecretKey secretKey = secretKeyFactory.generateSecret(pbeKeySpec);
-
-        byte[] salt = new byte[8];
-        Random random = new Random();
-        random.nextBytes(salt);
-
-        PBEParameterSpec pbeParameterSpec = new PBEParameterSpec(salt, 100);
-        Cipher cipher = Cipher.getInstance("PBEWithMD5AndTripleDES");
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey, pbeParameterSpec);
-
-        byte[] output = Base64.getEncoder().encode(cipher.doFinal(input));
-
-        System.out.println(new String(output));
-
-        // decrypt
-        PBEKeySpec pbeKeySpec1 = new PBEKeySpec(password.toCharArray());
-        SecretKeyFactory secretKeyFactory1 = SecretKeyFactory
-                .getInstance("PBEWithMD5AndTripleDES");
-        SecretKey secretKey1 = secretKeyFactory1.generateSecret(pbeKeySpec1);
-
-        PBEParameterSpec pbeParameterSpec1 = new PBEParameterSpec(salt, 100);
-
-        Cipher cipher1 = Cipher.getInstance("PBEWithMD5AndTripleDES");
-        cipher1.init(Cipher.DECRYPT_MODE, secretKey1, pbeParameterSpec1);
-
-        byte[] finals = Base64.getDecoder().decode(output);
-
-        System.out.println(new String(cipher1.doFinal(finals)));
+    public List<String> listAlgorithm(String algorithmType) {
+        List<String> result = new ArrayList<>();
+        try {
+            Provider[] providers = Security.getProviders();
+            for (Provider provider : providers) {
+                System.out.println(provider);
+                for (Enumeration enumeration = provider.keys(); enumeration.hasMoreElements(); ) {
+                    String element = (String) enumeration.nextElement();
+                    if (element.contains(algorithmType) && !element.contains("Hmac")) {
+                        System.out.println("\t" + element);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return result;
     }
 }
