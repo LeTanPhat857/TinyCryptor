@@ -67,9 +67,4 @@ public class HelpFrame extends JFrame {
     public void init() {
         this.setVisible(true);
     }
-
-    //
-    public static void main(String[] args) {
-        createHelpFrame().init();
-    }
 }

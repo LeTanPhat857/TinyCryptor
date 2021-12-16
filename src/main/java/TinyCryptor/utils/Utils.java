@@ -47,13 +47,4 @@ public class Utils {
     public static Path writeFile(byte[] data, File file) throws IOException {
         return Files.write(file.toPath(), data);
     }
-
-    public static void main(String[] args) throws Exception {
-        String text = "This is a example";
-
-        File file = createFile("src/main/java/TinyCryptor/app/abc.txt");
-        Path path = writeFile(text.getBytes(), file);
-        System.out.println(path);
-        System.out.println(new String(readFile(file)));
-    }
 }
