@@ -72,6 +72,7 @@ public class Controller {
         optionPane.setOptions(options);
 
         Dialog dialog = optionPane.createDialog("Exit");
+        dialog.setIconImage(Utils.getImage("images/icon/cryptography.png", 16, 16, Image.SCALE_SMOOTH));
 
         yesBtn.addActionListener(a -> System.exit(0));
         noBtn.addActionListener(e -> dialog.dispose());
@@ -247,6 +248,7 @@ public class Controller {
         optionPane.setOptions(options);
 
         Dialog dialog = optionPane.createDialog("Error !!!");
+        dialog.setIconImage(Utils.getImage("images/icon/cryptography.png", 16, 16, Image.SCALE_SMOOTH));
 
         okBtn.addActionListener(e -> dialog.dispose());
 

@@ -1,5 +1,6 @@
 package TinyCryptor.view.mainFrame;
 
+import TinyCryptor.utils.Utils;
 import TinyCryptor.view.mainFrame.commandPanel.CommandPanel;
 import TinyCryptor.view.mainFrame.contentPanel.ContentPanel;
 
@@ -14,6 +15,7 @@ public class MainFrame extends JFrame {
     // constructor
     public MainFrame() {
         // set up
+        this.setIconImage(Utils.getImage("images/icon/cryptography.png", 16, 16, Image.SCALE_SMOOTH));
         this.setTitle("TinyCryptor");
         this.setBackground(Color.WHITE);
         this.setLayout(new BorderLayout());

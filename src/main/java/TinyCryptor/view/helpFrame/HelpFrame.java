@@ -14,6 +14,7 @@ public class HelpFrame extends JFrame {
 
     // constructor
     public HelpFrame() {
+        this.setIconImage(Utils.getImage("images/icon/cryptography.png", 16, 16, Image.SCALE_SMOOTH));
         this.setTitle("Help");
         this.setLayout(new BorderLayout());
 

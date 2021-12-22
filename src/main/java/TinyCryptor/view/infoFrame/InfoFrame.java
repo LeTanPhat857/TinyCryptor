@@ -1,5 +1,6 @@
 package TinyCryptor.view.infoFrame;
 
+import TinyCryptor.utils.Utils;
 import TinyCryptor.view.helper.HyperLinkLabel;
 
 import javax.swing.*;
@@ -24,6 +25,7 @@ public class InfoFrame extends JDialog {
 
     // constructor
     public InfoFrame() {
+        this.setIconImage(Utils.getImage("images/icon/cryptography.png", 16, 16, Image.SCALE_SMOOTH));
         this.setTitle("About TinyCryptor");
         this.getContentPane().setLayout(new BorderLayout());
         this.setModal(true);
