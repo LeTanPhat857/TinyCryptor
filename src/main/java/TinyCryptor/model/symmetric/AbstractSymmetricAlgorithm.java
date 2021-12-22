@@ -24,6 +24,9 @@ public abstract class AbstractSymmetricAlgorithm implements iSymmetricAlgorithm 
 
     // constructor
     public AbstractSymmetricAlgorithm() {
+        keySizeList = new int[]{32, 40, 64, 128, 192, 256, 384, 512, 1024, 2048, 3072, 4096};
+        modesList = new String[]{"ECB", "CBC", "PCBC", "CFB", "OFB", "CTR"};
+        paddingList = new String[]{"NoPadding", "ISO10126Padding", "PKCS5Padding"};
     }
 
     // methods

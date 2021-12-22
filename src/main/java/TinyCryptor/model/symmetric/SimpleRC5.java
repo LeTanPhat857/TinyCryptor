@@ -14,8 +14,8 @@ public class SimpleRC5 extends AbstractSymmetricAlgorithm{
         initVec = new byte[16];
 
         keySizeList = new int[]{64, 128, 256, 512, 1024};
-        modesList = new String[]{};
-        paddingList = new String[]{};
+        //        modesList = new String[]{};
+//        paddingList = new String[]{};
     }
 
     // methods
