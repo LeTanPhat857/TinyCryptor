@@ -9,6 +9,8 @@ import TinyCryptor.model.SymmetricType;
 import TinyCryptor.model.asymmetric.iAsymmetricAlgorithm;
 import TinyCryptor.model.hash.iHashAlgorithm;
 import TinyCryptor.model.symmetric.iSymmetricAlgorithm;
+import TinyCryptor.utils.Utils;
+import TinyCryptor.view.helper.RoundedButton;
 import TinyCryptor.view.mainFrame.MainFrame;
 import TinyCryptor.view.mainFrame.contentPanel.ContentPanel;
 import TinyCryptor.view.mainFrame.contentPanel.PBEPanel.PBEPanel;
@@ -18,7 +20,6 @@ import TinyCryptor.view.mainFrame.contentPanel.symmetricPanel.SymmetricPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 import java.util.Base64;
 
 public class View {
@@ -120,7 +121,7 @@ public class View {
 
                 algorithm.generateKey((int) symmetricPanel.getKeySizeBox().getSelected());
                 symmetricPanel.getKeyBox().setText("");
-                JOptionPane.showMessageDialog(null, "create key successfully!");
+                handleNotification("Create key successfully!");
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -159,7 +160,7 @@ public class View {
 
                 algorithm.generateKey((int) asymmetricPanel.getKeySizeBox().getSelected());
                 asymmetricPanel.getKeyBox().setText("");
-                JOptionPane.showMessageDialog(null, "create key successfully!");
+                handleNotification("Create key successfully!");
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -214,8 +215,7 @@ public class View {
             iPBEAlgorithm algorithm = pbeType.getAlgorithm(algorithmName);
 
             algorithm.generateRandomSalt();
-            JOptionPane.showMessageDialog(null, "create salt successfully!");
-
+            handleNotification("Create salt successfully!");
         });
 
         pbePanel.getShowSaltBtn().addActionListener(e -> {
@@ -224,5 +224,23 @@ public class View {
 
             pbePanel.getSaltBox().setText(Base64.getEncoder().encodeToString(algorithm.getSalt()));
         });
+    }
+
+    private void handleNotification(String massage) {
+        JButton okBtn = new RoundedButton();
+        okBtn.setText("Ok");
+        Object[] options = {okBtn};
+
+        JOptionPane optionPane = new JOptionPane();
+        optionPane.setMessage(new JLabel(massage, JLabel.CENTER));
+        optionPane.setOptionType(JOptionPane.DEFAULT_OPTION);
+        optionPane.setOptions(options);
+
+        Dialog dialog = optionPane.createDialog("Notification");
+        dialog.setIconImage(Utils.getImage("images/icon/cryptography.png", 16, 16, Image.SCALE_SMOOTH));
+
+        okBtn.addActionListener(e -> dialog.dispose());
+
+        dialog.setVisible(true);
     }
 }
