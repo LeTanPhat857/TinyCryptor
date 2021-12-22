@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
 Main-Class: TinyCryptor.app.TinyCryptor
+Class-Path: lib/bcprov-ext-jdk15on-170.jar
 

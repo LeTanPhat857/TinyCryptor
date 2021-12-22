@@ -8,19 +8,34 @@ import TinyCryptor.model.asymmetric.SimpleRSA;
 import TinyCryptor.model.hash.SimpleMD;
 import TinyCryptor.model.hash.SimpleSHA;
 import TinyCryptor.model.symmetric.*;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
+import java.net.MalformedURLException;
+import java.security.Security;
 
 public class TinyCryptor {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws MalformedURLException, ClassNotFoundException {
+        // add provider
+        Security.addProvider(new BouncyCastleProvider());
         // init algorithm type
         SymmetricType symmetricType = SymmetricType.create()
+                // JCA
                 .add(new SimpleAES())
                 .add(new SimpleBlowfish())
                 .add(new SimpleDES())
                 .add(new SimpleDESede())
                 .add(new SimpleRC2())
                 .add(new SimpleRC4())
-                .add(new SimpleRC5());
+                .add(new SimpleRC5())
+                // BouncyCastleProvider
+                .add(new SimpleRC6())
+                .add(new SimpleCAST5())
+                .add(new SimpleCAST6())
+                .add(new SimpleHC128())
+                .add(new SimpleHC256())
+                .add(new SimpleChaCha())
+                .add(new SimpleCamellia());
         AsymmetricType asymmetricType = AsymmetricType.create()
                 .add(new SimpleRSA());
         HashType hashType = HashType.create()
