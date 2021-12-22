@@ -8,10 +8,11 @@ import TinyCryptor.model.symmetric.iSymmetricAlgorithm;
 import TinyCryptor.utils.Utils;
 import TinyCryptor.view.View;
 import TinyCryptor.view.helpFrame.HelpFrame;
+import TinyCryptor.view.helper.RoundedButton;
+import TinyCryptor.view.infoFrame.InfoFrame;
 import TinyCryptor.view.mainFrame.contentPanel.PBEPanel.PBEPanel;
 import TinyCryptor.view.mainFrame.contentPanel.asymmetricPanel.AsymmetricPanel;
 import TinyCryptor.view.mainFrame.contentPanel.hashPanel.HashPanel;
-import TinyCryptor.view.helper.RoundedButton;
 import TinyCryptor.view.mainFrame.contentPanel.symmetricPanel.SymmetricPanel;
 
 import javax.swing.*;
@@ -50,15 +51,10 @@ public class Controller {
 
     // action handler
     public void info() {
-        String info = "TinyCryptor is a small Java cryptography project. \n" +
-                "Subject: Cryptography \n" +
-                "Instructor: Phan Dinh Long \n" +
-                "Owner: Le Tan Phat \n";
-
-        JOptionPane.showMessageDialog(null, info, "About TinyCryptor", JOptionPane.NO_OPTION);
+        InfoFrame.createInfoFrame().init();
     }
 
-    public void help(){
+    public void help() {
         JPanel selectedPanel = (JPanel) view.getContentPanel().getSelectedComponent();
         HelpFrame.createHelpFrame().open(selectedPanel.getName()).init();
     }
