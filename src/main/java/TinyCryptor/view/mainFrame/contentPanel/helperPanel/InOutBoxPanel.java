@@ -196,7 +196,8 @@ public class InOutBoxPanel extends RoundedPanel {
     }
 
     public InOutBoxPanel setOpenFolderBtn() {
-        chooseFileDialogBtn.setToolTipText("open file");
+        chooseFileDialogBtn.setToolTipText("open folder");
+        chooseFileDialogBtn.setIcon(Utils.getImageIcon("images/icon/openFolder.png", 16, 16, Image.SCALE_AREA_AVERAGING));
         chooseFileDialogBtn.removeActionListener(chooseFileDialogBtn.getActionListeners()[0]);
         chooseFileDialogBtn.addActionListener(openFolder());
         cancelFileBtn.removeActionListener(cancelFileBtn.getActionListeners()[0]);
