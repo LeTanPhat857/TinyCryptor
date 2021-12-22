@@ -30,6 +30,10 @@ public class Utils {
         return null;
     }
 
+    public static Image getImage(String imagePath, int width, int height, int scaleType) {
+        return Objects.requireNonNull(scaleImage(getImage(imagePath), width, height, scaleType));
+    }
+
     public static ImageIcon getImageIcon(String imagePath, int width, int height, int scaleType) {
         return new ImageIcon(Objects.requireNonNull(scaleImage(getImage(imagePath), width, height, scaleType)));
     }

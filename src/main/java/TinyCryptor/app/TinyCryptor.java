@@ -8,6 +8,7 @@ import TinyCryptor.model.asymmetric.SimpleRSA;
 import TinyCryptor.model.hash.SimpleMD;
 import TinyCryptor.model.hash.SimpleSHA;
 import TinyCryptor.model.symmetric.*;
+import TinyCryptor.view.logoFrame.LogoFrame;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.net.MalformedURLException;
@@ -16,7 +17,9 @@ import java.security.Security;
 public class TinyCryptor {
 
     public static void main(String[] args) throws MalformedURLException, ClassNotFoundException {
-        // add provider
+        // show logo
+        LogoFrame.showLogo();
+        // add  BouncyCastleProvider
         Security.addProvider(new BouncyCastleProvider());
         // init algorithm type
         SymmetricType symmetricType = SymmetricType.create()
@@ -52,5 +55,7 @@ public class TinyCryptor {
                 .add(pbeType);
         // init controller
         Controller.create(model).init();
+        // dispose logo
+        LogoFrame.disposeLogo();
     }
 }
