@@ -235,8 +235,22 @@ public class Controller {
     }
 
     public void handleException(Exception exception) {
-        JOptionPane.showMessageDialog(null, exception.getMessage(), "Error!!!", JOptionPane.WARNING_MESSAGE);
         exception.printStackTrace();
+
+        JButton okBtn = new RoundedButton();
+        okBtn.setText("Ok");
+        Object[] options = {okBtn};
+
+        JOptionPane optionPane = new JOptionPane();
+        optionPane.setMessage(new JLabel(exception.getMessage(), JLabel.CENTER));
+        optionPane.setOptionType(JOptionPane.DEFAULT_OPTION);
+        optionPane.setOptions(options);
+
+        Dialog dialog = optionPane.createDialog("Error !!!");
+
+        okBtn.addActionListener(e -> dialog.dispose());
+
+        dialog.setVisible(true);
     }
 
     // get
