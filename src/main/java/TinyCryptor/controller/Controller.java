@@ -64,11 +64,10 @@ public class Controller {
         JButton noBtn = new RoundedButton();
         yesBtn.setText("Yes");
         noBtn.setText("No");
-        Object[] options = {yesBtn, noBtn};
+        Object[] options = {yesBtn, new JLabel("  "), noBtn};
 
         JOptionPane optionPane = new JOptionPane();
-        optionPane.setMessageType(JOptionPane.WARNING_MESSAGE);
-        optionPane.setMessage("Do you want to exit?");
+        optionPane.setMessage(new JLabel("Do you want to exit?", JLabel.CENTER));
         optionPane.setOptionType(JOptionPane.DEFAULT_OPTION);
         optionPane.setOptions(options);
 
