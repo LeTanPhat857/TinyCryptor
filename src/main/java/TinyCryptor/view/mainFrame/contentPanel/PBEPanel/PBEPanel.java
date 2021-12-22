@@ -1,7 +1,7 @@
 package TinyCryptor.view.mainFrame.contentPanel.PBEPanel;
 
-import TinyCryptor.view.mainFrame.contentPanel.helperPanel.InOutBoxPanel;
-import TinyCryptor.view.mainFrame.contentPanel.helperPanel.SetUpBoxPanel;
+import TinyCryptor.view.helper.InOutBoxPanel;
+import TinyCryptor.view.helper.SetUpBoxPanel;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,6 +1,6 @@
 package TinyCryptor.view.mainFrame.contentPanel.hashPanel;
 
-import TinyCryptor.view.mainFrame.contentPanel.helperPanel.InOutBoxPanel;
+import TinyCryptor.view.helper.InOutBoxPanel;
 
 import javax.swing.*;
 

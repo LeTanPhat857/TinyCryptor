@@ -1,4 +1,4 @@
-package TinyCryptor.view.mainFrame.contentPanel.helperPanel;
+package TinyCryptor.view.helper;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

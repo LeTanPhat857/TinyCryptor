@@ -11,7 +11,7 @@ import TinyCryptor.view.helpFrame.HelpFrame;
 import TinyCryptor.view.mainFrame.contentPanel.PBEPanel.PBEPanel;
 import TinyCryptor.view.mainFrame.contentPanel.asymmetricPanel.AsymmetricPanel;
 import TinyCryptor.view.mainFrame.contentPanel.hashPanel.HashPanel;
-import TinyCryptor.view.mainFrame.contentPanel.helperPanel.RoundedButton;
+import TinyCryptor.view.helper.RoundedButton;
 import TinyCryptor.view.mainFrame.contentPanel.symmetricPanel.SymmetricPanel;
 
 import javax.swing.*;

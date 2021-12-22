@@ -1,7 +1,7 @@
 package TinyCryptor.view.helpFrame;
 
 import TinyCryptor.utils.Utils;
-import TinyCryptor.view.mainFrame.contentPanel.helperPanel.RoundedButton;
+import TinyCryptor.view.helper.RoundedButton;
 
 import javax.swing.*;
 import java.awt.*;

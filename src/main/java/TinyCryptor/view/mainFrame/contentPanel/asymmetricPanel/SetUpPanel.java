@@ -1,8 +1,8 @@
 package TinyCryptor.view.mainFrame.contentPanel.asymmetricPanel;
 
 import TinyCryptor.utils.Utils;
-import TinyCryptor.view.mainFrame.contentPanel.helperPanel.RoundedButton;
-import TinyCryptor.view.mainFrame.contentPanel.helperPanel.SetUpBoxPanel;
+import TinyCryptor.view.helper.RoundedButton;
+import TinyCryptor.view.helper.SetUpBoxPanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
