@@ -20,6 +20,8 @@ public class SetUpPanel extends JPanel {
         algorithmSetUpBoxPanel = new SetUpBoxPanel("Algorithm").setToolTip("choose algorithm");
         modeSetUpBoxPanel = new SetUpBoxPanel("Type").setToolTip("choose type");
 
+        algorithmSetUpBoxPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        modeSetUpBoxPanel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         // add component
         this.add(algorithmSetUpBoxPanel);
         this.add(modeSetUpBoxPanel);
