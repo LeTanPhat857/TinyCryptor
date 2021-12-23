@@ -27,6 +27,11 @@ public class ContentPanel extends JTabbedPane {
         this.addTab("Asymmetric", asymmetricPanel);
         this.addTab("Hash", hashPanel);
         this.addTab("PBE", pbePanel);
+
+        this.setToolTipTextAt(0, "symmetric type");
+        this.setToolTipTextAt(1, "asymmetric type");
+        this.setToolTipTextAt(2, "hash type");
+        this.setToolTipTextAt(3, "PBE type");
     }
 
     // methods

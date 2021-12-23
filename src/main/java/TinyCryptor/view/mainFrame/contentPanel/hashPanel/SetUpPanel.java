@@ -17,8 +17,8 @@ public class SetUpPanel extends JPanel {
         this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createTitledBorder("Set up"), BorderFactory.createEmptyBorder(25, 0, 222, 0)));
 
         // create component
-        algorithmSetUpBoxPanel = new SetUpBoxPanel("Algorithm");
-        modeSetUpBoxPanel = new SetUpBoxPanel("Type");
+        algorithmSetUpBoxPanel = new SetUpBoxPanel("Algorithm").setToolTip("choose algorithm");
+        modeSetUpBoxPanel = new SetUpBoxPanel("Type").setToolTip("choose type");
 
         // add component
         this.add(algorithmSetUpBoxPanel);

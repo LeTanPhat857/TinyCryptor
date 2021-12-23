@@ -33,13 +33,12 @@ public class SetUpBoxPanel<T> extends JPanel {
         return (T) box.getSelectedItem();
     }
 
-    public JComboBox getComboBox() {
-        return box;
+    public SetUpBoxPanel setToolTip(String toolTip) {
+        box.setToolTipText(toolTip);
+        return this;
     }
 
-    public SetUpBoxPanel hideBox() {
-        this.setBorder(BorderFactory.createTitledBorder(new EmptyBorder(5, 5, 5, 5), "", 1, 1));
-        box.setVisible(false);
-        return this;
+    public JComboBox getComboBox() {
+        return box;
     }
 }

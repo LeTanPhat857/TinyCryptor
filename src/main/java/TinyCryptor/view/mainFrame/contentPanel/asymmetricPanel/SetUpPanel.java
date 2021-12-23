@@ -28,10 +28,10 @@ public class SetUpPanel extends JPanel {
         // create component
         encrypt = new JRadioButton("Encrypt", true);
         decrypt = new JRadioButton("Decrypt");
-        algorithmSetUpBoxPanel = new SetUpBoxPanel("Algorithm");
-        modeSetUpBoxPanel = new SetUpBoxPanel("Mode");
-        paddingSetUpBoxPanel = new SetUpBoxPanel("Padding");
-        keySizeSetUpBoxPanel = new SetUpBoxPanel("");
+        algorithmSetUpBoxPanel = new SetUpBoxPanel("Algorithm").setToolTip("choose algorithm");
+        modeSetUpBoxPanel = new SetUpBoxPanel("Mode").setToolTip("choose mode");
+        paddingSetUpBoxPanel = new SetUpBoxPanel("Padding").setToolTip("choose padding");
+        keySizeSetUpBoxPanel = new SetUpBoxPanel("").setToolTip("choose key size");
 
 
         // add component
@@ -50,6 +50,8 @@ public class SetUpPanel extends JPanel {
         buttonGroup.add(decrypt);
         encrypt.setBackground(Color.WHITE);
         decrypt.setBackground(Color.WHITE);
+        encrypt.setToolTipText("choose encrypt");
+        decrypt.setToolTipText("choose decrypt");
         JPanel tempPanel = new JPanel();
         tempPanel.setBackground(Color.WHITE);
         tempPanel.setLayout(new GridLayout(1, 2, 15, 10));

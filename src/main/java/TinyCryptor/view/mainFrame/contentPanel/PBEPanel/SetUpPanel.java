@@ -25,8 +25,8 @@ public class SetUpPanel extends JPanel {
         // create component
         encrypt = new JRadioButton("Encrypt", true);
         decrypt = new JRadioButton("Decrypt");
-        hashAlgorithmSetUpBoxPanel = new SetUpBoxPanel("Hash Algorithm");
-        symmetricAlgorithmSetUpBoxPanel = new SetUpBoxPanel("Symmetric Algorithm");
+        hashAlgorithmSetUpBoxPanel = new SetUpBoxPanel("Hash Algorithm").setToolTip("choose hash algorithm");
+        symmetricAlgorithmSetUpBoxPanel = new SetUpBoxPanel("Symmetric Algorithm").setToolTip("choose symmetric algorithm");
         // add component
         this.add(createEncryptDecryptPanel());
         this.add(hashAlgorithmSetUpBoxPanel);
