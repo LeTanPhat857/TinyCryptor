@@ -182,15 +182,15 @@ public class View {
     }
 
     private void drawHashPanel(HashPanel hashPanel) {
-        HashType symmetricType = (HashType) controller.get("hash");
-        iHashAlgorithm defaultAlgorithm = symmetricType.getAlgorithm(0);
+        HashType hashType = (HashType) controller.get("hash");
+        iHashAlgorithm defaultAlgorithm = hashType.getAlgorithm(0);
         // set up panel
-        hashPanel.getAlgorithmBox().setItemList(symmetricType.getAlgorithmList());
+        hashPanel.getAlgorithmBox().setItemList(hashType.getAlgorithmList());
         hashPanel.getTypeBox().setItemList(defaultAlgorithm.getTypeList());
         // action for algorithm box (set up panel)
         hashPanel.getAlgorithmBox().getComboBox().addActionListener(e -> {
             String algorithmName = (String) hashPanel.getAlgorithmBox().getSelected();
-            iHashAlgorithm algorithm = symmetricType.getAlgorithm(algorithmName);
+            iHashAlgorithm algorithm = hashType.getAlgorithm(algorithmName);
 
             hashPanel.getTypeBox().setItemList(algorithm.getTypeList());
         });

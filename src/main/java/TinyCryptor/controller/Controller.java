@@ -193,7 +193,7 @@ public class Controller {
             HashPanel panel = (HashPanel) selectedPanel;
             // set up info
             String algorithm = (String) panel.getAlgorithmBox().getSelected();
-            Integer mode = (Integer) panel.getTypeBox().getSelected();
+            String mode = (String) panel.getTypeBox().getSelected();
             String spec = algorithm.trim() + mode;
             // in out info
             String inputText = panel.getInputBox().getText();

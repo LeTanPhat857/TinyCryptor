@@ -7,7 +7,7 @@ public class SimpleSHA extends AbstractHashAlgorithm {
     // constructor
     public SimpleSHA() {
         spec = "";
-        typeList = new int[]{1, 224, 256, 384, 512};
+        typeList = new String[]{"1", "224", "256", "384", "512", "512/224", "512/256"};
     }
 
     // methods

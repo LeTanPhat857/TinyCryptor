@@ -13,7 +13,7 @@ public abstract class AbstractHashAlgorithm implements iHashAlgorithm {
     protected String charset = "utf-8";
 
     protected String spec = "";
-    protected int[] typeList = {};
+    protected String[] typeList = {};
 
     // constructor
     public AbstractHashAlgorithm() {
@@ -50,8 +50,8 @@ public abstract class AbstractHashAlgorithm implements iHashAlgorithm {
 
     @Override
     public List getTypeList() {
-        List<Integer> list = new ArrayList<>();
-        for (Integer item : typeList) {
+        List<String> list = new ArrayList<>();
+        for (String item : typeList) {
             list.add(item);
         }
         return list;

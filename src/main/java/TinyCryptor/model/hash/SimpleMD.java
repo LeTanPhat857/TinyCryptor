@@ -7,12 +7,13 @@ public class SimpleMD extends AbstractHashAlgorithm {
     // constructor
     public SimpleMD() {
         spec = "";
-        typeList = new int[]{2, 5};
+        typeList = new String[]{"2", "5"};
     }
 
     // methods
     @Override
     public String getName() {
-        return "MD" + "                                  ";
+        // add "                          " to get a good view
+        return "MD" + "                              ";
     }
 }
