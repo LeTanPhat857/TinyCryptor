@@ -10,7 +10,9 @@ public class SimpleCAST5 extends AbstractSymmetricAlgorithm {
         key = new byte[16];
         initVec = new byte[16];
 
-        keySizeList = new int[]{32, 40, 64, 128};
+        keySizeList = new int[]{64, 128};
+        modesList = new String[]{"ECB", "CBC", "CFB", "OFB", "CTR"};
+
     }
 
     @Override

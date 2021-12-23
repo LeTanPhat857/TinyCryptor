@@ -11,8 +11,6 @@ public class SimpleAES extends AbstractSymmetricAlgorithm {
         initVec = new byte[16];
 
         keySizeList = new int[]{128, 192, 256};
-        modesList = new String[]{"ECB", "CBC", "PCBC", "CFB", "OFB", "CTR"};
-//        paddingList = new String[]{"NoPadding", "ISO10126Padding", "PKCS5Padding"};
     }
 
     @Override

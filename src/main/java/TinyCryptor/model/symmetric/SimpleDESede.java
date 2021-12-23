@@ -11,8 +11,6 @@ public class SimpleDESede extends AbstractSymmetricAlgorithm {
         initVec = new byte[8];
 
         keySizeList = new int[]{112, 168};
-        modesList = new String[]{"ECB", "CBC", "PCBC", "CFB", "OFB", "CTR"};
-//        paddingList = new String[]{"NoPadding", "ISO10126Padding", "PKCS5Padding"};
 
     }
 

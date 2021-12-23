@@ -6,9 +6,13 @@ public class SimpleHC256 extends AbstractSymmetricAlgorithm {
 
     // constructor
     public SimpleHC256() {
-        spec = "HC256/ECB/pkcs5padding";
+        spec = "HC256/ECB/NoPadding";
         key = new byte[16];
         initVec = new byte[16];
+
+        keySizeList = new int[]{128, 256};
+        modesList = new String[]{"ECB"};
+        paddingList = new String[]{"NoPadding"};
     }
 
     @Override

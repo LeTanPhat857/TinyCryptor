@@ -6,9 +6,13 @@ public class SimpleHC128 extends AbstractSymmetricAlgorithm {
 
     // constructor
     public SimpleHC128() {
-        spec = "HC128/ECB/pkcs5padding";
+        spec = "HC128/ECB/NoPadding";
         key = new byte[16];
         initVec = new byte[16];
+
+        keySizeList = new int[]{128};
+        modesList = new String[]{"ECB"};
+        paddingList = new String[]{"NoPadding"};
     }
 
     @Override

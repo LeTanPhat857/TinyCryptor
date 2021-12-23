@@ -10,9 +10,7 @@ public class SimpleBlowfish extends AbstractSymmetricAlgorithm {
         key = new byte[8];
         initVec = new byte[8];
 
-        keySizeList = new int[]{32, 64, 128, 256};
-        modesList = new String[]{"ECB", "CBC", "PCBC", "CFB", "OFB", "CTR"};
-//        paddingList = new String[]{"NoPadding", "ISO10126Padding", "PKCS5Padding"};
+        keySizeList = new int[]{64, 128, 256};
     }
 
     // methods
