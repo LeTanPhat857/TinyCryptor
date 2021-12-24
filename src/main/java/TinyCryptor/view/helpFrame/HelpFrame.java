@@ -5,6 +5,8 @@ import TinyCryptor.view.helper.RoundedButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.Objects;
 
 public class HelpFrame extends JFrame {
@@ -53,6 +55,7 @@ public class HelpFrame extends JFrame {
         this.pack();
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        this.setResizable(false);
     }
 
     // methods

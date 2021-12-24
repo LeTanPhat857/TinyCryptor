@@ -6,6 +6,8 @@ import TinyCryptor.view.mainFrame.contentPanel.ContentPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class MainFrame extends JFrame {
     // fields
@@ -29,13 +31,16 @@ public class MainFrame extends JFrame {
         this.pack();
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
+
+        this.customizeResize();
     }
 
     // methods
+
     public JButton getInfoBtn() {
         return commandPanel.getInfoBtn();
     }
-
     public JButton getRunBtn() {
         return this.commandPanel.getRunBtn();
     }
@@ -52,4 +57,19 @@ public class MainFrame extends JFrame {
     public ContentPanel getContentPanel() {
         return contentPanel;
     }
+
+    private void customizeResize() {
+        this.getContentPanel().addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent e) {
+                Dimension dim = getContentPanel().getSize();
+                Dimension minDim = getContentPanel().getMinimumSize();
+                if (dim.width < minDim.width)
+                    dim.width = minDim.width;
+                if (dim.height < minDim.height)
+                    dim.height = minDim.height;
+                getContentPanel().setSize(dim);
+            }
+        });
+    }
+
 }
