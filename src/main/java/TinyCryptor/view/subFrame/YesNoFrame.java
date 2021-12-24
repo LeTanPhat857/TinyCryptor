@@ -6,13 +6,14 @@ import TinyCryptor.view.helper.RoundedButton;
 import javax.swing.*;
 import java.awt.*;
 
-public class ExitFrame {
+public class YesNoFrame {
 
     // fields
     private JDialog dialog;
+    private boolean bool;
 
     // constructor
-    private ExitFrame() {
+    private YesNoFrame(String title, String content) {
         JButton yesBtn = new RoundedButton();
         JButton noBtn = new RoundedButton();
         yesBtn.setText("Yes");
@@ -20,24 +21,35 @@ public class ExitFrame {
         Object[] options = {yesBtn, new JLabel("  "), noBtn};
 
         JOptionPane optionPane = new JOptionPane();
-        optionPane.setMessage(new JLabel("Do you want to exit?", JLabel.CENTER));
+        optionPane.setMessage(new JLabel(content, JLabel.CENTER));
         optionPane.setOptionType(JOptionPane.DEFAULT_OPTION);
         optionPane.setOptions(options);
 
-        dialog = optionPane.createDialog("Exit");
+        dialog = optionPane.createDialog(title);
         dialog.setIconImage(Utils.getImage("images/icon/cryptography.png", 16, 16, Image.SCALE_SMOOTH));
 
-        yesBtn.addActionListener(a -> System.exit(0));
-        noBtn.addActionListener(e -> dialog.dispose());
+        yesBtn.addActionListener(e -> {
+            dialog.dispose();
+            bool = true;
+        });
+
+        noBtn.addActionListener(e -> {
+            dialog.dispose();
+            bool = false;
+        });
     }
 
     // methods
-    public static ExitFrame create() {
-        return new ExitFrame();
+    public static YesNoFrame create(String title, String content) {
+        return new YesNoFrame(title, content);
     }
 
-    public void setVisible(boolean bool) {
+    public YesNoFrame setVisible(boolean bool) {
         dialog.setVisible(bool);
+        return this;
     }
 
+    public boolean getBool() {
+        return bool;
+    }
 }

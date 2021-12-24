@@ -6,7 +6,7 @@ import TinyCryptor.view.mainFrame.contentPanel.PBEPanel.PBEPanel;
 import TinyCryptor.view.mainFrame.contentPanel.asymmetricPanel.AsymmetricPanel;
 import TinyCryptor.view.mainFrame.contentPanel.hashPanel.HashPanel;
 import TinyCryptor.view.mainFrame.contentPanel.symmetricPanel.SymmetricPanel;
-import TinyCryptor.view.subFrame.ExitFrame;
+import TinyCryptor.view.subFrame.YesNoFrame;
 import TinyCryptor.view.subFrame.HelpFrame;
 import TinyCryptor.view.subFrame.InfoFrame;
 import TinyCryptor.view.subFrame.MessageFrame;
@@ -63,7 +63,10 @@ public class Controller {
     }
 
     public void exit() {
-        ExitFrame.create().setVisible(true);
+        boolean bool = YesNoFrame.create("Exit", "Do you want to exit?").setVisible(true).getBool();
+        if (bool) {
+            System.exit(0);
+        }
     }
 
     public void run() {
