@@ -71,7 +71,7 @@ public class PBEController {
             iPBEAlgorithm algorithm = pbeType.getAlgorithm(algorithmName);
 
             algorithm.generateRandomSalt();
-            MessageFrame.create("Notification", "Create salt successfully!");
+            MessageFrame.create("Notification", "Create salt successfully!").setVisible(true);
         });
 
         pbePanel.getShowSaltBtn().addActionListener(e -> {
