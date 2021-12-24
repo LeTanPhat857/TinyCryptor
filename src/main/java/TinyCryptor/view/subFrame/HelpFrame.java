@@ -1,12 +1,10 @@
-package TinyCryptor.view.helpFrame;
+package TinyCryptor.view.subFrame;
 
 import TinyCryptor.utils.Utils;
 import TinyCryptor.view.helper.RoundedButton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.util.Objects;
 
 public class HelpFrame extends JFrame {
@@ -15,7 +13,7 @@ public class HelpFrame extends JFrame {
     private JLabel label;
 
     // constructor
-    public HelpFrame() {
+    private HelpFrame() {
         this.setIconImage(Utils.getImage("images/icon/cryptography.png", 16, 16, Image.SCALE_SMOOTH));
         this.setTitle("Help");
         this.setLayout(new BorderLayout());
@@ -59,7 +57,7 @@ public class HelpFrame extends JFrame {
     }
 
     // methods
-    public static HelpFrame createHelpFrame() {
+    public static HelpFrame create() {
         return new HelpFrame();
     }
 
@@ -68,7 +66,7 @@ public class HelpFrame extends JFrame {
         return this;
     }
 
-    public void init() {
-        this.setVisible(true);
+    public void setVisible(boolean bool) {
+        this.setVisible(bool);
     }
 }

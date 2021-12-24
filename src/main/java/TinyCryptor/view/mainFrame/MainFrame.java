@@ -37,10 +37,10 @@ public class MainFrame extends JFrame {
     }
 
     // methods
-
     public JButton getInfoBtn() {
         return commandPanel.getInfoBtn();
     }
+
     public JButton getRunBtn() {
         return this.commandPanel.getRunBtn();
     }
@@ -53,7 +53,6 @@ public class MainFrame extends JFrame {
         return commandPanel.getExitBtn();
     }
 
-    //
     public ContentPanel getContentPanel() {
         return contentPanel;
     }

@@ -1,4 +1,4 @@
-package TinyCryptor.view.logoFrame;
+package TinyCryptor.view.subFrame;
 
 import TinyCryptor.utils.Utils;
 
@@ -11,7 +11,7 @@ public class LogoFrame extends JFrame {
     private static LogoFrame instance;
 
     // constructor
-    public LogoFrame() {
+    private LogoFrame() {
         JLabel label = new JLabel(Utils.getImageIcon("images/icon/logo.png", 200, 250, Image.SCALE_SMOOTH));
 
         this.setUndecorated(true); // Remove title bar

@@ -9,7 +9,7 @@ import TinyCryptor.model.hash.SimpleMD;
 import TinyCryptor.model.hash.SimpleSHA;
 import TinyCryptor.model.symmetric.*;
 import TinyCryptor.view.View;
-import TinyCryptor.view.logoFrame.LogoFrame;
+import TinyCryptor.view.subFrame.LogoFrame;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.net.MalformedURLException;

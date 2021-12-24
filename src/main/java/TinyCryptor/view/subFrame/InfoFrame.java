@@ -1,4 +1,4 @@
-package TinyCryptor.view.infoFrame;
+package TinyCryptor.view.subFrame;
 
 import TinyCryptor.utils.Utils;
 import TinyCryptor.view.helper.HyperLinkLabel;
@@ -24,7 +24,7 @@ public class InfoFrame extends JDialog {
     private final String facebookLink = "https://www.facebook.com/tanphat.le.9085790";
 
     // constructor
-    public InfoFrame() {
+    private InfoFrame() {
         this.setIconImage(Utils.getImage("images/icon/cryptography.png", 16, 16, Image.SCALE_SMOOTH));
         this.setTitle("About TinyCryptor");
         this.getContentPane().setLayout(new BorderLayout());
@@ -40,12 +40,12 @@ public class InfoFrame extends JDialog {
     }
 
     // methods
-    public static InfoFrame createInfoFrame() {
+    public static InfoFrame create() {
         return new InfoFrame();
     }
 
-    public void init() {
-        this.setVisible(true);
+    public void setVisible(boolean bool) {
+        this.setVisible(bool);
     }
 
     private JPanel createInfoPanel() {

@@ -5,6 +5,7 @@ import TinyCryptor.model.Model;
 import TinyCryptor.model.asymmetric.iAsymmetricAlgorithm;
 import TinyCryptor.view.View;
 import TinyCryptor.view.mainFrame.contentPanel.asymmetricPanel.AsymmetricPanel;
+import TinyCryptor.view.subFrame.MessageFrame;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -26,32 +27,28 @@ public class AsymmetricController {
         return new AsymmetricController(model, view);
     }
 
-    public void runAsymmetric(JPanel selectedPanel) {
-        try {
-            AsymmetricPanel panel = (AsymmetricPanel) selectedPanel;
-            // set up info
-            boolean encrypt = panel.getEncrypt().isSelected();
-            String algorithm = (String) panel.getAlgorithmBox().getSelected();
-            String mode = (String) panel.getModeBox().getSelected();
-            String padding = (String) panel.getPaddingBox().getSelected();
-            String spec = algorithm + "/" + mode + "/" + padding;
-            // in out info
-            byte[] inputText = panel.getInputBox().getText().getBytes("utf-8");
-            byte[] key = panel.getKeyBox().getText().getBytes("utf-8");
-            if (Arrays.equals(key, "".getBytes())) {
-                throw new Exception("Empty key");
-            }
-            // process
-            iAsymmetricAlgorithm cipher = ((AsymmetricType) model.get("asymmetric")).getAlgorithm(algorithm).setSpec(spec);
-            if (encrypt) {
-                byte[] cipherTxt = cipher.setPublicKey(key).encrypt(inputText);
-                panel.getOutputBox().setText(new String(cipherTxt, "utf-8"));
-            } else {
-                byte[] plainTxt = cipher.setPrivateKey(key).decrypt(inputText);
-                panel.getOutputBox().setText(new String(plainTxt));
-            }
-        } catch (Exception e) {
-            Controller.getInstance().handleException(e);
+    public void runAsymmetric(JPanel selectedPanel) throws Exception {
+        AsymmetricPanel panel = (AsymmetricPanel) selectedPanel;
+        // set up info
+        boolean encrypt = panel.getEncrypt().isSelected();
+        String algorithm = (String) panel.getAlgorithmBox().getSelected();
+        String mode = (String) panel.getModeBox().getSelected();
+        String padding = (String) panel.getPaddingBox().getSelected();
+        String spec = algorithm + "/" + mode + "/" + padding;
+        // in out info
+        byte[] inputText = panel.getInputBox().getText().getBytes("utf-8");
+        byte[] key = panel.getKeyBox().getText().getBytes("utf-8");
+        if (Arrays.equals(key, "".getBytes())) {
+            throw new Exception("Empty key");
+        }
+        // process
+        iAsymmetricAlgorithm cipher = ((AsymmetricType) model.get("asymmetric")).getAlgorithm(algorithm).setSpec(spec);
+        if (encrypt) {
+            byte[] cipherTxt = cipher.setPublicKey(key).encrypt(inputText);
+            panel.getOutputBox().setText(new String(cipherTxt, "utf-8"));
+        } else {
+            byte[] plainTxt = cipher.setPrivateKey(key).decrypt(inputText);
+            panel.getOutputBox().setText(new String(plainTxt));
         }
     }
 
@@ -80,7 +77,7 @@ public class AsymmetricController {
 
                 algorithm.generateKey((int) asymmetricPanel.getKeySizeBox().getSelected());
                 asymmetricPanel.getKeyBox().setText("");
-                Controller.getInstance().notify("Create key successfully!");
+                MessageFrame.create("Notification", "Create key successfully!").setVisible(true);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

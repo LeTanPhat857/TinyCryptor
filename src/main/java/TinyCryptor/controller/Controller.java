@@ -1,28 +1,21 @@
 package TinyCryptor.controller;
 
-import TinyCryptor.model.*;
-import TinyCryptor.model.PBE.iPBEAlgorithm;
-import TinyCryptor.model.asymmetric.iAsymmetricAlgorithm;
-import TinyCryptor.model.hash.iHashAlgorithm;
-import TinyCryptor.model.symmetric.iSymmetricAlgorithm;
-import TinyCryptor.utils.Utils;
+import TinyCryptor.model.Model;
 import TinyCryptor.view.View;
-import TinyCryptor.view.helpFrame.HelpFrame;
-import TinyCryptor.view.helper.RoundedButton;
-import TinyCryptor.view.infoFrame.InfoFrame;
 import TinyCryptor.view.mainFrame.contentPanel.PBEPanel.PBEPanel;
 import TinyCryptor.view.mainFrame.contentPanel.asymmetricPanel.AsymmetricPanel;
 import TinyCryptor.view.mainFrame.contentPanel.hashPanel.HashPanel;
 import TinyCryptor.view.mainFrame.contentPanel.symmetricPanel.SymmetricPanel;
+import TinyCryptor.view.subFrame.ExitFrame;
+import TinyCryptor.view.subFrame.HelpFrame;
+import TinyCryptor.view.subFrame.InfoFrame;
+import TinyCryptor.view.subFrame.MessageFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Base64;
 
 public class Controller {
     // fields
-    private static Controller instance;
-
     private Model model;
     private View view;
 
@@ -44,14 +37,7 @@ public class Controller {
 
     // methods
     public static Controller create(Model model, View view) {
-        return instance = new Controller(model, view);
-    }
-
-    public static Controller getInstance() {
-        if (instance != null) {
-            return instance;
-        }
-        return create(null, null);
+        return new Controller(model, view);
     }
 
     public void init() {
@@ -68,75 +54,43 @@ public class Controller {
 
     // action handler
     public void info() {
-        InfoFrame.createInfoFrame().init();
+        InfoFrame.create().setVisible(true);
     }
 
     public void help() {
         JPanel selectedPanel = (JPanel) view.getContentPanel().getSelectedComponent();
-        HelpFrame.createHelpFrame().open(selectedPanel.getName()).init();
+        HelpFrame.create().open(selectedPanel.getName()).setVisible(true);
     }
 
     public void exit() {
-        JButton yesBtn = new RoundedButton();
-        JButton noBtn = new RoundedButton();
-        yesBtn.setText("Yes");
-        noBtn.setText("No");
-        Object[] options = {yesBtn, new JLabel("  "), noBtn};
-
-        JOptionPane optionPane = new JOptionPane();
-        optionPane.setMessage(new JLabel("Do you want to exit?", JLabel.CENTER));
-        optionPane.setOptionType(JOptionPane.DEFAULT_OPTION);
-        optionPane.setOptions(options);
-
-        Dialog dialog = optionPane.createDialog("Exit");
-        dialog.setIconImage(Utils.getImage("images/icon/cryptography.png", 16, 16, Image.SCALE_SMOOTH));
-
-        yesBtn.addActionListener(a -> System.exit(0));
-        noBtn.addActionListener(e -> dialog.dispose());
-
-        dialog.setVisible(true);
+        ExitFrame.create().setVisible(true);
     }
 
     public void run() {
         JPanel selectedPanel = (JPanel) view.getContentPanel().getSelectedComponent();
-        switch (selectedPanel.getName()) {
-            case "symmetric": {
-                symmContr.runSymmetric(selectedPanel);
-                break;
+        try {
+            switch (selectedPanel.getName()) {
+                case "symmetric": {
+                    symmContr.runSymmetric(selectedPanel);
+                    break;
+                }
+                case "asymmetric": {
+                    asymmContr.runAsymmetric(selectedPanel);
+                    break;
+                }
+                case "hash": {
+                    hashContr.runHash(selectedPanel);
+                    break;
+                }
+                case "pbe": {
+                    pbeContr.runPBE(selectedPanel);
+                    break;
+                }
             }
-            case "asymmetric": {
-                asymmContr.runAsymmetric(selectedPanel);
-                break;
-            }
-            case "hash": {
-                hashContr.runHash(selectedPanel);
-                break;
-            }
-            case "pbe": {
-                pbeContr.runPBE(selectedPanel);
-                break;
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            MessageFrame.create("ERROR !!!", e.getMessage()).setVisible(true);
         }
-    }
-
-    public void handleException(Exception exception) {
-        exception.printStackTrace();
-
-        JButton okBtn = new RoundedButton();
-        okBtn.setText("Ok");
-        Object[] options = {okBtn};
-
-        JOptionPane optionPane = new JOptionPane();
-        optionPane.setMessage(new JLabel(exception.getMessage(), JLabel.CENTER));
-        optionPane.setOptionType(JOptionPane.DEFAULT_OPTION);
-        optionPane.setOptions(options);
-
-        Dialog dialog = optionPane.createDialog("Error !!!");
-        dialog.setIconImage(Utils.getImage("images/icon/cryptography.png", 16, 16, Image.SCALE_SMOOTH));
-
-        okBtn.addActionListener(e -> dialog.dispose());
-
-        dialog.setVisible(true);
     }
 
     // draw panel
@@ -166,23 +120,5 @@ public class Controller {
                 break;
             }
         }
-    }
-
-    public void notify(String massage) {
-        JButton okBtn = new RoundedButton();
-        okBtn.setText("Ok");
-        Object[] options = {okBtn};
-
-        JOptionPane optionPane = new JOptionPane();
-        optionPane.setMessage(new JLabel(massage, JLabel.CENTER));
-        optionPane.setOptionType(JOptionPane.DEFAULT_OPTION);
-        optionPane.setOptions(options);
-
-        Dialog dialog = optionPane.createDialog("Notification");
-        dialog.setIconImage(Utils.getImage("images/icon/cryptography.png", 16, 16, Image.SCALE_SMOOTH));
-
-        okBtn.addActionListener(e -> dialog.dispose());
-
-        dialog.setVisible(true);
     }
 }

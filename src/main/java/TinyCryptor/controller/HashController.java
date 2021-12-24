@@ -25,22 +25,18 @@ public class HashController {
         return new HashController(model, view);
     }
 
-    public void runHash(JPanel selectedPanel) {
-        try {
-            HashPanel panel = (HashPanel) selectedPanel;
-            // set up info
-            String algorithm = (String) panel.getAlgorithmBox().getSelected();
-            String mode = (String) panel.getTypeBox().getSelected();
-            String spec = algorithm.trim() + mode;
-            // in out info
-            String inputText = panel.getInputBox().getText();
-            // process
-            iHashAlgorithm hashAlgorithm = ((HashType) model.get("hash")).getAlgorithm(algorithm).setSpec(spec);
-            byte[] inputBytes = hashAlgorithm.encrypt(inputText.getBytes("utf-8"));
-            panel.getOutputBox().setText(new String(Base64.getEncoder().encode(inputBytes), "utf-8"));
-        } catch (Exception e) {
-            Controller.getInstance().handleException(e);
-        }
+    public void runHash(JPanel selectedPanel) throws Exception {
+        HashPanel panel = (HashPanel) selectedPanel;
+        // set up info
+        String algorithm = (String) panel.getAlgorithmBox().getSelected();
+        String mode = (String) panel.getTypeBox().getSelected();
+        String spec = algorithm.trim() + mode;
+        // in out info
+        String inputText = panel.getInputBox().getText();
+        // process
+        iHashAlgorithm hashAlgorithm = ((HashType) model.get("hash")).getAlgorithm(algorithm).setSpec(spec);
+        byte[] inputBytes = hashAlgorithm.encrypt(inputText.getBytes("utf-8"));
+        panel.getOutputBox().setText(new String(Base64.getEncoder().encode(inputBytes), "utf-8"));
     }
 
     public void drawHashPanel(HashPanel hashPanel) {

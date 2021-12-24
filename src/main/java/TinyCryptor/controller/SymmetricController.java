@@ -6,6 +6,7 @@ import TinyCryptor.model.symmetric.iSymmetricAlgorithm;
 import TinyCryptor.utils.Utils;
 import TinyCryptor.view.View;
 import TinyCryptor.view.mainFrame.contentPanel.symmetricPanel.SymmetricPanel;
+import TinyCryptor.view.subFrame.MessageFrame;
 
 import javax.swing.*;
 import java.io.File;
@@ -28,60 +29,56 @@ public class SymmetricController {
         return new SymmetricController(model, view);
     }
 
-    public void runSymmetric(JPanel selectedPanel) {
-        try {
-            SymmetricPanel panel = (SymmetricPanel) selectedPanel;
-            // set up info
-            boolean encrypt = panel.getEncrypt().isSelected();
-            String algorithm = (String) panel.getAlgorithmBox().getSelected();
-            String mode = (String) panel.getModeBox().getSelected();
-            String padding = (String) panel.getPaddingBox().getSelected();
-            String spec = algorithm + "/" + mode + "/" + padding;
-            // in out info
-            byte[] inputText = panel.getInputBox().getText().getBytes("utf-8");
-            byte[] key = panel.getKeyBox().getText().getBytes("utf-8");
-            byte[] initVec = panel.getInitVecBox().getText().getBytes("utf-8");
+    public void runSymmetric(JPanel selectedPanel) throws Exception {
+        SymmetricPanel panel = (SymmetricPanel) selectedPanel;
+        // set up info
+        boolean encrypt = panel.getEncrypt().isSelected();
+        String algorithm = (String) panel.getAlgorithmBox().getSelected();
+        String mode = (String) panel.getModeBox().getSelected();
+        String padding = (String) panel.getPaddingBox().getSelected();
+        String spec = algorithm + "/" + mode + "/" + padding;
+        // in out info
+        byte[] inputText = panel.getInputBox().getText().getBytes("utf-8");
+        byte[] key = panel.getKeyBox().getText().getBytes("utf-8");
+        byte[] initVec = panel.getInitVecBox().getText().getBytes("utf-8");
 
-            File keyFile = panel.getKeyBox().getFile();
-            File inputFile = panel.getInputBox().getFile();
-            File initVecFile = panel.getInitVecBox().getFile();
-            // process
-            if (keyFile != null) {
-                key = Utils.readFile(keyFile);
-            }
-            if (inputFile != null) {
-                inputText = Utils.readFile(inputFile);
-            }
-            if (initVecFile != null) {
-                initVec = Utils.readFile(inputFile);
-            }
-            if (Arrays.equals(key, "".getBytes())) {
-                throw new Exception("Empty key");
-            }
-            iSymmetricAlgorithm cipher = ((SymmetricType) model.get("symmetric")).getAlgorithm(algorithm).setSpec(spec).setInitVec(initVec);
-            if (inputFile != null) {
-                if (encrypt) {
-                    byte[] cipherTxt = cipher.setKey(Base64.getEncoder().encode(key)).encrypt(inputText);
-                    File file = Utils.createFile(inputFile.getParent() + "/encrypted_" + inputFile.getName());
-                    Utils.writeFile(cipherTxt, file);
-                    panel.getOutputBox().setFile(file);
-                } else {
-                    byte[] plainTxt = cipher.setKey(Base64.getEncoder().encode(key)).decrypt(inputText);
-                    File file = Utils.createFile(inputFile.getParent() + "/decrypted_" + inputFile.getName());
-                    Utils.writeFile(plainTxt, file);
-                    panel.getOutputBox().setFile(file);
-                }
+        File keyFile = panel.getKeyBox().getFile();
+        File inputFile = panel.getInputBox().getFile();
+        File initVecFile = panel.getInitVecBox().getFile();
+        // process
+        if (keyFile != null) {
+            key = Utils.readFile(keyFile);
+        }
+        if (inputFile != null) {
+            inputText = Utils.readFile(inputFile);
+        }
+        if (initVecFile != null) {
+            initVec = Utils.readFile(inputFile);
+        }
+        if (Arrays.equals(key, "".getBytes())) {
+            throw new Exception("Empty key");
+        }
+        iSymmetricAlgorithm cipher = ((SymmetricType) model.get("symmetric")).getAlgorithm(algorithm).setSpec(spec).setInitVec(initVec);
+        if (inputFile != null) {
+            if (encrypt) {
+                byte[] cipherTxt = cipher.setKey(Base64.getEncoder().encode(key)).encrypt(inputText);
+                File file = Utils.createFile(inputFile.getParent() + "/encrypted_" + inputFile.getName());
+                Utils.writeFile(cipherTxt, file);
+                panel.getOutputBox().setFile(file);
             } else {
-                if (encrypt) {
-                    byte[] cipherTxt = cipher.setKey(key).encrypt(inputText);
-                    panel.getOutputBox().setText(new String(cipherTxt, "utf-8"));
-                } else {
-                    byte[] plainTxt = cipher.setKey(key).decrypt(inputText);
-                    panel.getOutputBox().setText(new String(plainTxt, "utf-8"));
-                }
+                byte[] plainTxt = cipher.setKey(Base64.getEncoder().encode(key)).decrypt(inputText);
+                File file = Utils.createFile(inputFile.getParent() + "/decrypted_" + inputFile.getName());
+                Utils.writeFile(plainTxt, file);
+                panel.getOutputBox().setFile(file);
             }
-        } catch (Exception e) {
-            Controller.getInstance().handleException(e);
+        } else {
+            if (encrypt) {
+                byte[] cipherTxt = cipher.setKey(key).encrypt(inputText);
+                panel.getOutputBox().setText(new String(cipherTxt, "utf-8"));
+            } else {
+                byte[] plainTxt = cipher.setKey(key).decrypt(inputText);
+                panel.getOutputBox().setText(new String(plainTxt, "utf-8"));
+            }
         }
     }
 
@@ -110,7 +107,7 @@ public class SymmetricController {
 
                 algorithm.generateKey((int) symmetricPanel.getKeySizeBox().getSelected());
                 symmetricPanel.getKeyBox().setText("");
-                Controller.getInstance().notify("Create key successfully!");
+                MessageFrame.create("Notification", "Create key successfully!").setVisible(true);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
