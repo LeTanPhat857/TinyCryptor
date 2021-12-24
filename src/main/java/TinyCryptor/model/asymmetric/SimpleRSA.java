@@ -13,7 +13,7 @@ public class SimpleRSA extends AbstractAsymmetricAlgorithm {
 
             keySizeList = new int[]{1024, 2048, 3072, 4096};
             modesList = new String[]{"ECB"};
-            paddingList = new String[]{"NoPadding", "PKCS1Padding", "OAEPWithSHA1AndMGF1Padding", "OAEPWithSHA-256AndMGF1Padding", "OAEPWithSHA-512AndMGF1Padding"};
+            paddingList = new String[]{"NoPadding", "PKCS1Padding", "OAEPWithSHA1AndMGF1Padding", "OAEPWithSHA256AndMGF1Padding"};
         } catch (Exception exception) {
             exception.printStackTrace();
         }
