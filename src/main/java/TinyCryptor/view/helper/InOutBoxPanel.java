@@ -4,12 +4,14 @@ import TinyCryptor.utils.Utils;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 
 public class InOutBoxPanel extends RoundedPanel {
@@ -61,6 +63,14 @@ public class InOutBoxPanel extends RoundedPanel {
         fileProcessPanel.setLayout(new BoxLayout(fileProcessPanel, BoxLayout.X_AXIS));
         fileProcessPanel.setBorder(new EmptyBorder(3, 0, 3, 0));
         fileChooser = new JFileChooser();
+
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Text Files (.txt)", "txt"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Key Files (.key)", "key"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Images Files (.png .jpg)", "jpg", "png"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("PDF Documents (.pdf)", "pdf"));
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("MS Office Documents (.docx .xlsx .pptx)", "docx", "xlsx", "pptx"));
 
         chooseFileDialogBtn = new RoundedButton();
         cancelFileBtn = new RoundedButton();
@@ -114,6 +124,7 @@ public class InOutBoxPanel extends RoundedPanel {
     private ActionListener chooseFileDialog() {
         return e -> {
             int returnVal = fileChooser.showOpenDialog(null);
+
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 selectedFile = fileChooser.getSelectedFile();
                 String fileName = selectedFile.getName();
