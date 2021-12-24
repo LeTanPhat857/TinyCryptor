@@ -8,6 +8,7 @@ import TinyCryptor.model.asymmetric.SimpleRSA;
 import TinyCryptor.model.hash.SimpleMD;
 import TinyCryptor.model.hash.SimpleSHA;
 import TinyCryptor.model.symmetric.*;
+import TinyCryptor.view.View;
 import TinyCryptor.view.logoFrame.LogoFrame;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -53,8 +54,10 @@ public class TinyCryptor {
                 .add(asymmetricType)
                 .add(hashType)
                 .add(pbeType);
+        // init view
+        View view = View.create();
         // init controller
-        Controller.create(model).init();
+        Controller.create(model, view).init();
         // dispose logo
         LogoFrame.disposeLogo();
     }

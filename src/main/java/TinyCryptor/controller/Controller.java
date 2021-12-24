@@ -17,34 +17,51 @@ import TinyCryptor.view.mainFrame.contentPanel.symmetricPanel.SymmetricPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.util.Arrays;
 import java.util.Base64;
 
 public class Controller {
     // fields
+    private static Controller instance;
+
     private Model model;
     private View view;
 
+    private SymmetricController symmContr;
+    private AsymmetricController asymmContr;
+    private HashController hashContr;
+    private PBEController pbeContr;
+
     // constructor
-    public Controller(Model model) {
+    private Controller(Model model, View view) {
         this.model = model;
-        view = new View(this);
+        this.view = view;
+
+        this.symmContr = SymmetricController.create(model, view);
+        this.asymmContr = AsymmetricController.create(model, view);
+        this.hashContr = HashController.create(model, view);
+        this.pbeContr = PBEController.create(model, view);
     }
 
     // methods
-    public static Controller create(Model model) {
-        return new Controller(model);
+    public static Controller create(Model model, View view) {
+        return instance = new Controller(model, view);
+    }
+
+    public static Controller getInstance() {
+        if (instance != null) {
+            return instance;
+        }
+        return create(null, null);
     }
 
     public void init() {
+        // draw
+        drawContentPanel();
         // command
         view.getInfoBtn().addActionListener(e -> info());
         view.getRunBtn().addActionListener(e -> run());
         view.getHelpBtn().addActionListener(e -> help());
         view.getExitBtn().addActionListener(e -> exit());
-        //
-
         // show view
         view.setVisible(true);
     }
@@ -84,154 +101,21 @@ public class Controller {
         JPanel selectedPanel = (JPanel) view.getContentPanel().getSelectedComponent();
         switch (selectedPanel.getName()) {
             case "symmetric": {
-                runSymmetric(selectedPanel);
+                symmContr.runSymmetric(selectedPanel);
                 break;
             }
             case "asymmetric": {
-                runAsymmetric(selectedPanel);
+                asymmContr.runAsymmetric(selectedPanel);
                 break;
             }
             case "hash": {
-                runHash(selectedPanel);
+                hashContr.runHash(selectedPanel);
                 break;
             }
             case "pbe": {
-                runPBE(selectedPanel);
+                pbeContr.runPBE(selectedPanel);
                 break;
             }
-        }
-    }
-
-    private void runSymmetric(JPanel selectedPanel) {
-        try {
-            SymmetricPanel panel = (SymmetricPanel) selectedPanel;
-            // set up info
-            boolean encrypt = panel.getEncrypt().isSelected();
-            String algorithm = (String) panel.getAlgorithmBox().getSelected();
-            String mode = (String) panel.getModeBox().getSelected();
-            String padding = (String) panel.getPaddingBox().getSelected();
-            String spec = algorithm + "/" + mode + "/" + padding;
-            // in out info
-            byte[] inputText = panel.getInputBox().getText().getBytes("utf-8");
-            byte[] key = panel.getKeyBox().getText().getBytes("utf-8");
-            byte[] initVec = panel.getInitVecBox().getText().getBytes("utf-8");
-
-            File keyFile = panel.getKeyBox().getFile();
-            File inputFile = panel.getInputBox().getFile();
-            File initVecFile = panel.getInitVecBox().getFile();
-            // process
-            if (keyFile != null) {
-                key = Utils.readFile(keyFile);
-            }
-            if (inputFile != null) {
-                inputText = Utils.readFile(inputFile);
-            }
-            if (initVecFile != null) {
-                initVec = Utils.readFile(inputFile);
-            }
-            if (Arrays.equals(key, "".getBytes())) {
-                throw new Exception("Empty key");
-            }
-            iSymmetricAlgorithm cipher = ((SymmetricType) model.get("symmetric")).getAlgorithm(algorithm).setSpec(spec).setInitVec(initVec);
-            if (inputFile != null) {
-                if (encrypt) {
-                    byte[] cipherTxt = cipher.setKey(Base64.getEncoder().encode(key)).encrypt(inputText);
-                    File file = Utils.createFile(inputFile.getParent() + "/encrypted_" + inputFile.getName());
-                    Utils.writeFile(cipherTxt, file);
-                    panel.getOutputBox().setFile(file);
-                } else {
-                    byte[] plainTxt = cipher.setKey(Base64.getEncoder().encode(key)).decrypt(inputText);
-                    File file = Utils.createFile(inputFile.getParent() + "/decrypted_" + inputFile.getName());
-                    Utils.writeFile(plainTxt, file);
-                    panel.getOutputBox().setFile(file);
-                }
-            } else {
-                if (encrypt) {
-                    byte[] cipherTxt = cipher.setKey(key).encrypt(inputText);
-                    panel.getOutputBox().setText(new String(cipherTxt, "utf-8"));
-                } else {
-                    byte[] plainTxt = cipher.setKey(key).decrypt(inputText);
-                    panel.getOutputBox().setText(new String(plainTxt, "utf-8"));
-                }
-            }
-        } catch (Exception e) {
-            handleException(e);
-        }
-    }
-
-    private void runAsymmetric(JPanel selectedPanel) {
-        try {
-            AsymmetricPanel panel = (AsymmetricPanel) selectedPanel;
-            // set up info
-            boolean encrypt = panel.getEncrypt().isSelected();
-            String algorithm = (String) panel.getAlgorithmBox().getSelected();
-            String mode = (String) panel.getModeBox().getSelected();
-            String padding = (String) panel.getPaddingBox().getSelected();
-            String spec = algorithm + "/" + mode + "/" + padding;
-            // in out info
-            byte[] inputText = panel.getInputBox().getText().getBytes("utf-8");
-            byte[] key = panel.getKeyBox().getText().getBytes("utf-8");
-            if (Arrays.equals(key, "".getBytes())) {
-                throw new Exception("Empty key");
-            }
-            // process
-            iAsymmetricAlgorithm cipher = ((AsymmetricType) model.get("asymmetric")).getAlgorithm(algorithm).setSpec(spec);
-            if (encrypt) {
-                byte[] cipherTxt = cipher.setPublicKey(key).encrypt(inputText);
-                panel.getOutputBox().setText(new String(cipherTxt, "utf-8"));
-            } else {
-                byte[] plainTxt = cipher.setPrivateKey(key).decrypt(inputText);
-                panel.getOutputBox().setText(new String(plainTxt));
-            }
-        } catch (Exception e) {
-            handleException(e);
-        }
-    }
-
-    private void runHash(JPanel selectedPanel) {
-        try {
-            HashPanel panel = (HashPanel) selectedPanel;
-            // set up info
-            String algorithm = (String) panel.getAlgorithmBox().getSelected();
-            String mode = (String) panel.getTypeBox().getSelected();
-            String spec = algorithm.trim() + mode;
-            // in out info
-            String inputText = panel.getInputBox().getText();
-            // process
-            iHashAlgorithm hashAlgorithm = ((HashType) model.get("hash")).getAlgorithm(algorithm).setSpec(spec);
-            byte[] inputBytes = hashAlgorithm.encrypt(inputText.getBytes("utf-8"));
-            panel.getOutputBox().setText(new String(Base64.getEncoder().encode(inputBytes), "utf-8"));
-        } catch (Exception e) {
-            handleException(e);
-        }
-    }
-
-    private void runPBE(JPanel selectedPanel) {
-        try {
-            PBEPanel panel = (PBEPanel) selectedPanel;
-            // set up info
-            String hashAlgorithm = (String) panel.getHashAlgorithmBox().getSelected();
-            String symmetricAlgorithm = (String) panel.getSymmetricAlgorithmBox().getSelected();
-            String spec = "PBEWith" + hashAlgorithm + "And" + symmetricAlgorithm;
-            // in out info
-            boolean encrypt = panel.getEncrypt().isSelected();
-            char[] key = panel.getPasswordBox().getText().toCharArray();
-            byte[] salt = panel.getSaltBox().getText().getBytes("utf-8");
-            byte[] input = panel.getInputBox().getText().getBytes("utf-8");
-            // process
-            if (Arrays.equals(salt, "".getBytes())) {
-                throw new Exception("Empty salt");
-            }
-            iPBEAlgorithm cipher = ((PBEType) model.get("pbe")).getAlgorithm(hashAlgorithm).setSpec(spec);
-            if (encrypt) {
-                byte[] cipherTxt = cipher.setKey(key).encrypt(input);
-                panel.getOutputBox().setText(new String(cipherTxt, "utf-8"));
-            } else {
-                byte[] plainTxt = cipher.setKey(key).decrypt(input);
-                panel.getOutputBox().setText(new String(plainTxt, "utf-8"));
-            }
-        } catch (Exception e) {
-            handleException(e);
         }
     }
 
@@ -255,8 +139,50 @@ public class Controller {
         dialog.setVisible(true);
     }
 
-    // get
-    public iAlgorithmType get(String type) {
-        return model.get(type);
+    // draw panel
+    private void drawContentPanel() {
+        Component[] components = view.getContentPanel().getComponents();
+        for (Component component : components) {
+            drawTabbedPanel((JPanel) component);
+        }
+    }
+
+    private void drawTabbedPanel(JPanel panel) {
+        switch (panel.getName()) {
+            case "symmetric": {
+                symmContr.drawSymmetricPanel((SymmetricPanel) panel);
+                break;
+            }
+            case "asymmetric": {
+                asymmContr.drawAsymmetricPanel((AsymmetricPanel) panel);
+                break;
+            }
+            case "hash": {
+                hashContr.drawHashPanel((HashPanel) panel);
+                break;
+            }
+            case "pbe": {
+                pbeContr.drawPBEPanel((PBEPanel) panel);
+                break;
+            }
+        }
+    }
+
+    public void notify(String massage) {
+        JButton okBtn = new RoundedButton();
+        okBtn.setText("Ok");
+        Object[] options = {okBtn};
+
+        JOptionPane optionPane = new JOptionPane();
+        optionPane.setMessage(new JLabel(massage, JLabel.CENTER));
+        optionPane.setOptionType(JOptionPane.DEFAULT_OPTION);
+        optionPane.setOptions(options);
+
+        Dialog dialog = optionPane.createDialog("Notification");
+        dialog.setIconImage(Utils.getImage("images/icon/cryptography.png", 16, 16, Image.SCALE_SMOOTH));
+
+        okBtn.addActionListener(e -> dialog.dispose());
+
+        dialog.setVisible(true);
     }
 }
