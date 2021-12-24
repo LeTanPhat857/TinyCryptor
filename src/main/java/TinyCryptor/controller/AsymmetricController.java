@@ -3,11 +3,15 @@ package TinyCryptor.controller;
 import TinyCryptor.model.AsymmetricType;
 import TinyCryptor.model.Model;
 import TinyCryptor.model.asymmetric.iAsymmetricAlgorithm;
+import TinyCryptor.utils.Utils;
 import TinyCryptor.view.View;
 import TinyCryptor.view.mainFrame.contentPanel.asymmetricPanel.AsymmetricPanel;
 import TinyCryptor.view.subFrame.MessageFrame;
+import TinyCryptor.view.subFrame.YesNoFrame;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
 import java.util.Arrays;
 import java.util.Base64;
 
@@ -38,18 +42,42 @@ public class AsymmetricController {
         // in out info
         byte[] inputText = panel.getInputBox().getText().getBytes("utf-8");
         byte[] key = panel.getKeyBox().getText().getBytes("utf-8");
+        File keyFile = panel.getKeyBox().getFile();
+        File inputFile = panel.getInputBox().getFile();
+        // check file
+        if (keyFile != null) {
+            key = Utils.readFile(keyFile);
+        }
+        if (inputFile != null) {
+            inputText = Utils.readFile(inputFile);
+        }
         if (Arrays.equals(key, "".getBytes())) {
             throw new Exception("Empty key");
         }
         // process
         iAsymmetricAlgorithm cipher = ((AsymmetricType) model.get("asymmetric")).getAlgorithm(algorithm).setSpec(spec);
-        if (encrypt) {
-            byte[] cipherTxt = cipher.setPublicKey(key).encrypt(inputText);
-            panel.getOutputBox().setText(new String(cipherTxt, "utf-8"));
+        if (inputFile != null) {
+            if (encrypt) {
+                byte[] cipherTxt = cipher.setPublicKey(key).encrypt(inputText);
+                File file = Utils.createFile(inputFile.getParent() + "/encrypted_" + inputFile.getName());
+                Utils.writeFile(cipherTxt, file);
+                panel.getOutputBox().setFile(file);
+            } else {
+                byte[] plainTxt = cipher.setPrivateKey(key).decrypt(inputText);
+                File file = Utils.createFile(inputFile.getParent() + "/decrypted_" + inputFile.getName());
+                Utils.writeFile(plainTxt, file);
+                panel.getOutputBox().setFile(file);
+            }
         } else {
-            byte[] plainTxt = cipher.setPrivateKey(key).decrypt(inputText);
-            panel.getOutputBox().setText(new String(plainTxt));
+            if (encrypt) {
+                byte[] cipherTxt = cipher.setPublicKey(key).encrypt(inputText);
+                panel.getOutputBox().setText(new String(cipherTxt, "utf-8"));
+            } else {
+                byte[] plainTxt = cipher.setPrivateKey(key).decrypt(inputText);
+                panel.getOutputBox().setText(new String(plainTxt, "utf-8"));
+            }
         }
+        MessageFrame.create("Notification", "Run successfully!").setVisible(true);
     }
 
     public void drawAsymmetricPanel(AsymmetricPanel asymmetricPanel) {
@@ -77,6 +105,27 @@ public class AsymmetricController {
 
                 algorithm.generateKey((int) asymmetricPanel.getKeySizeBox().getSelected());
                 asymmetricPanel.getKeyBox().setText("");
+
+                boolean bool = YesNoFrame.create("Exit", "Do you want to export key file?").setVisible(true).getBool();
+                if (bool) {
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setDialogTitle("Export public key and private key");
+                    fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                    fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Text Files (.txt)", "txt"));
+                    fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Key Files (.key)", "key"));
+                    fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Images Files (.png .jpg)", "jpg", "png"));
+                    fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("PDF Documents (.pdf)", "pdf"));
+                    fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("MS Office Documents (.docx .xlsx .pptx)", "docx", "xlsx", "pptx"));
+
+                    int returnVal = fileChooser.showSaveDialog(null);
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        File selectedFile = fileChooser.getSelectedFile();
+                        File pubFile = Utils.createFile(selectedFile.getPath() + "_" + asymmetricPanel.getKeySizeBox().getSelected() + ".publicKey");
+                        File priFile = Utils.createFile(selectedFile.getPath() + "_" + asymmetricPanel.getKeySizeBox().getSelected() + ".privateKey");
+                        Utils.writeFile(Base64.getEncoder().encode(algorithm.getPublicKey()), pubFile);
+                        Utils.writeFile(Base64.getEncoder().encode(algorithm.getPrivateKey()), priFile);
+                    }
+                }
                 MessageFrame.create("Notification", "Create key successfully!").setVisible(true);
             } catch (Exception exception) {
                 exception.printStackTrace();

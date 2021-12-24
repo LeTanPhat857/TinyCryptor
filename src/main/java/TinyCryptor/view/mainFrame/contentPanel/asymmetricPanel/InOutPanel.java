@@ -14,9 +14,9 @@ public class InOutPanel extends JPanel {
     public InOutPanel() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        keyInOutBoxPanel = new InOutBoxPanel("Key (Base64)").hideFileProcessPanel();
-        plainInOutBoxPanel = new InOutBoxPanel("Input").hideFileProcessPanel();
-        cipherInOutBoxPanel = new InOutBoxPanel("Output (Base64)").blockTextArea().hideFileProcessPanel();
+        keyInOutBoxPanel = new InOutBoxPanel("Key (Base64)");
+        plainInOutBoxPanel = new InOutBoxPanel("Input");
+        cipherInOutBoxPanel = new InOutBoxPanel("Output (Base64)").blockChooseFileBtn().blockTextArea().setOpenFolderBtn();
 
         this.add(keyInOutBoxPanel);
         this.add(plainInOutBoxPanel);

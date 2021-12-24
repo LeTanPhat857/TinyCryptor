@@ -1,13 +1,10 @@
 package TinyCryptor.utils;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Objects;
 
 public class Utils {
@@ -38,17 +35,17 @@ public class Utils {
         return new ImageIcon(Objects.requireNonNull(scaleImage(getImage(imagePath), width, height, scaleType)));
     }
 
-    public static File createFile(String path) throws IOException {
-        File file = new File(path);
-        file.createNewFile();
-        return file;
+    public static File createFile(String path) throws Exception {
+        return new File(path);
     }
 
     public static byte[] readFile(File file) throws Exception {
         return Files.readAllBytes(file.toPath());
     }
 
-    public static Path writeFile(byte[] data, File file) throws IOException {
-        return Files.write(file.toPath(), data);
+    public static void writeFile(byte[] data, File file) throws IOException {
+        if (file != null) {
+            Files.write(file.toPath(), data);
+        }
     }
 }

@@ -62,10 +62,10 @@ public class InOutBoxPanel extends RoundedPanel {
         fileProcessPanel.setBackground(Color.WHITE);
         fileProcessPanel.setLayout(new BoxLayout(fileProcessPanel, BoxLayout.X_AXIS));
         fileProcessPanel.setBorder(new EmptyBorder(3, 0, 3, 0));
+
         fileChooser = new JFileChooser();
-
+        fileChooser.setDialogTitle("choose file");
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Text Files (.txt)", "txt"));
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Key Files (.key)", "key"));
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Images Files (.png .jpg)", "jpg", "png"));
