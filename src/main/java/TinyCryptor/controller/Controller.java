@@ -6,10 +6,10 @@ import TinyCryptor.view.mainFrame.contentPanel.PBEPanel.PBEPanel;
 import TinyCryptor.view.mainFrame.contentPanel.asymmetricPanel.AsymmetricPanel;
 import TinyCryptor.view.mainFrame.contentPanel.hashPanel.HashPanel;
 import TinyCryptor.view.mainFrame.contentPanel.symmetricPanel.SymmetricPanel;
-import TinyCryptor.view.subFrame.YesNoFrame;
 import TinyCryptor.view.subFrame.HelpFrame;
 import TinyCryptor.view.subFrame.InfoFrame;
 import TinyCryptor.view.subFrame.MessageFrame;
+import TinyCryptor.view.subFrame.YesNoFrame;
 
 import javax.swing.*;
 import java.awt.*;

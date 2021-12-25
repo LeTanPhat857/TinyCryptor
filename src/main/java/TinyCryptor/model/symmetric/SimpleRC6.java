@@ -1,7 +1,5 @@
 package TinyCryptor.model.symmetric;
 
-import javax.crypto.KeyGenerator;
-
 public class SimpleRC6 extends AbstractSymmetricAlgorithm {
 
     // fields

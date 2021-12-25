@@ -1,14 +1,11 @@
 package TinyCryptor.model.hash;
 
-import TinyCryptor.utils.Utils;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 public abstract class AbstractHashAlgorithm implements iHashAlgorithm {

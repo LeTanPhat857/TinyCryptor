@@ -10,7 +10,6 @@ import TinyCryptor.view.subFrame.MessageFrame;
 
 import javax.swing.*;
 import java.io.File;
-import java.util.Base64;
 
 public class HashController {
     // fields

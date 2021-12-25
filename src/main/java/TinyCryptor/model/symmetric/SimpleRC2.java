@@ -1,8 +1,5 @@
 package TinyCryptor.model.symmetric;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
-
 public class SimpleRC2 extends AbstractSymmetricAlgorithm{
 
     // fields
