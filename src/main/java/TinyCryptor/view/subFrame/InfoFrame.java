@@ -44,10 +44,6 @@ public class InfoFrame extends JDialog {
         return new InfoFrame();
     }
 
-    public void setVisible(boolean bool) {
-        this.setVisible(bool);
-    }
-
     private JPanel createInfoPanel() {
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
@@ -68,5 +64,9 @@ public class InfoFrame extends JDialog {
         contactPanel.add(facebookHyperLink, BorderLayout.WEST);
         contactPanel.add(githubHyperLink, BorderLayout.EAST);
         return contactPanel;
+    }
+
+    public static void main(String[] args) {
+        create().setVisible(true);
     }
 }

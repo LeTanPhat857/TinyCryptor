@@ -66,7 +66,4 @@ public class HelpFrame extends JFrame {
         return this;
     }
 
-    public void setVisible(boolean bool) {
-        this.setVisible(bool);
-    }
 }
