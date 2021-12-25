@@ -9,7 +9,7 @@ import TinyCryptor.model.hash.SimpleMD;
 import TinyCryptor.model.hash.SimpleSHA;
 import TinyCryptor.model.symmetric.*;
 import TinyCryptor.view.View;
-import TinyCryptor.view.subFrame.LogoFrame;
+import TinyCryptor.view.subFrame.UndecoratedFrame;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.net.MalformedURLException;
@@ -19,7 +19,8 @@ public class TinyCryptor {
 
     public static void main(String[] args) throws MalformedURLException, ClassNotFoundException {
         // show logo
-        LogoFrame.showLogo();
+        UndecoratedFrame logoFrame = UndecoratedFrame.createLogoFrame();
+        new Thread(() -> logoFrame.setShow(true)).start();
         // add  BouncyCastleProvider
         Security.addProvider(new BouncyCastleProvider());
         // init algorithm type
@@ -56,9 +57,9 @@ public class TinyCryptor {
                 .add(pbeType);
         // init view
         View view = View.create();
+        // dispose logo
+        logoFrame.disposeFrame();
         // init controller
         Controller.create(model, view).init();
-        // dispose logo
-        LogoFrame.disposeLogo();
     }
 }

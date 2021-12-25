@@ -43,7 +43,6 @@ public class HashController {
         iHashAlgorithm hashAlgorithm = ((HashType) model.get("hash")).getAlgorithm(algorithm).setSpec(spec);
         byte[] cipherTxt = hashAlgorithm.encrypt(inputText);
         panel.getOutputBox().setText(Utils.convertStringToHex(new String(cipherTxt, "utf-8")));
-        MessageFrame.create("Notification", "Run successfully!").setVisible(true);
     }
 
     public void drawHashPanel(HashPanel hashPanel) {

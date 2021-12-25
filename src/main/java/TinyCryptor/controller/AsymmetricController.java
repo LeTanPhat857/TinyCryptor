@@ -77,7 +77,6 @@ public class AsymmetricController {
                 panel.getOutputBox().setText(new String(plainTxt, "utf-8"));
             }
         }
-        MessageFrame.create("Notification", "Run successfully!").setVisible(true);
     }
 
     public void drawAsymmetricPanel(AsymmetricPanel asymmetricPanel) {
@@ -129,6 +128,7 @@ public class AsymmetricController {
                 MessageFrame.create("Notification", "Create key successfully!").setVisible(true);
             } catch (Exception exception) {
                 exception.printStackTrace();
+                MessageFrame.create("ERROR !!!", exception.getMessage()).setVisible(true);
             }
         });
         // action for public key button (set up panel)

@@ -6,10 +6,7 @@ import TinyCryptor.view.mainFrame.contentPanel.PBEPanel.PBEPanel;
 import TinyCryptor.view.mainFrame.contentPanel.asymmetricPanel.AsymmetricPanel;
 import TinyCryptor.view.mainFrame.contentPanel.hashPanel.HashPanel;
 import TinyCryptor.view.mainFrame.contentPanel.symmetricPanel.SymmetricPanel;
-import TinyCryptor.view.subFrame.HelpFrame;
-import TinyCryptor.view.subFrame.InfoFrame;
-import TinyCryptor.view.subFrame.MessageFrame;
-import TinyCryptor.view.subFrame.YesNoFrame;
+import TinyCryptor.view.subFrame.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,30 +67,38 @@ public class Controller {
     }
 
     public void run() {
-        JPanel selectedPanel = (JPanel) view.getContentPanel().getSelectedComponent();
-        try {
-            switch (selectedPanel.getName()) {
-                case "symmetric": {
-                    symmContr.runSymmetric(selectedPanel);
-                    break;
+        UndecoratedFrame processingFrame = UndecoratedFrame.createProcessingFrame();
+        new Thread(() -> processingFrame.setShow(true)).start();
+
+        new Thread(() -> {
+            JPanel selectedPanel = (JPanel) view.getContentPanel().getSelectedComponent();
+            try {
+                switch (selectedPanel.getName()) {
+                    case "symmetric": {
+                        symmContr.runSymmetric(selectedPanel);
+                        break;
+                    }
+                    case "asymmetric": {
+                        asymmContr.runAsymmetric(selectedPanel);
+                        break;
+                    }
+                    case "hash": {
+                        hashContr.runHash(selectedPanel);
+                        break;
+                    }
+                    case "pbe": {
+                        pbeContr.runPBE(selectedPanel);
+                        break;
+                    }
                 }
-                case "asymmetric": {
-                    asymmContr.runAsymmetric(selectedPanel);
-                    break;
-                }
-                case "hash": {
-                    hashContr.runHash(selectedPanel);
-                    break;
-                }
-                case "pbe": {
-                    pbeContr.runPBE(selectedPanel);
-                    break;
-                }
+                processingFrame.disposeFrame();
+                MessageFrame.create("Notification", "Run successfully!").setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+                processingFrame.disposeFrame();
+                MessageFrame.create("ERROR !!!", e.getMessage()).setVisible(true);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            MessageFrame.create("ERROR !!!", e.getMessage()).setVisible(true);
-        }
+        }).start();
     }
 
     // draw panel
