@@ -66,7 +66,4 @@ public class InfoFrame extends JDialog {
         return contactPanel;
     }
 
-    public static void main(String[] args) {
-        create().setVisible(true);
-    }
 }

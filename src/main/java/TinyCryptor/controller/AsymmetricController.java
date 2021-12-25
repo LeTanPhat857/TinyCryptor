@@ -105,7 +105,7 @@ public class AsymmetricController {
                 algorithm.generateKey((int) asymmetricPanel.getKeySizeBox().getSelected());
                 asymmetricPanel.getKeyBox().setText("");
 
-                boolean bool = YesNoFrame.create("Exit", "Do you want to export key file?").setVisible(true).getBool();
+                boolean bool = YesNoFrame.create("Notification", "Do you want to export key file?").setVisible(true).getBool();
                 if (bool) {
                     JFileChooser fileChooser = new JFileChooser();
                     fileChooser.setDialogTitle("Export public key and private key");
