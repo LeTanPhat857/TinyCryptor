@@ -6,7 +6,6 @@ import TinyCryptor.model.hash.iHashAlgorithm;
 import TinyCryptor.utils.Utils;
 import TinyCryptor.view.View;
 import TinyCryptor.view.mainFrame.contentPanel.hashPanel.HashPanel;
-import TinyCryptor.view.subFrame.MessageFrame;
 
 import javax.swing.*;
 import java.io.File;
