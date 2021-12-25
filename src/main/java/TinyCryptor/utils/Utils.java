@@ -4,7 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
+import java.util.Base64;
 import java.util.Objects;
 
 public class Utils {
@@ -47,5 +49,22 @@ public class Utils {
         if (file != null) {
             Files.write(file.toPath(), data);
         }
+    }
+
+    public static String convertStringToHex(String string) throws Exception {
+        char[] HEX = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+        byte[] bytes = string.getBytes("utf-8");
+        final int nBytes = bytes.length;
+        char[] result = new char[2 * nBytes];         //  1 hex contains two chars
+        //  hex = [0-f][0-f], e.g 0f or ff
+        int j = 0;
+        for (byte aByte : bytes) {                    // loop byte by byte
+            // 0xF0 = FFFF 0000
+            result[j++] = HEX[(0xF0 & aByte) >>> 4];    // get the top 4 bits, first half hex char
+            // 0x0F = 0000 FFFF
+            result[j++] = HEX[(0x0F & aByte)];          // get the bottom 4 bits, second half hex char
+            // combine first and second half, we get a complete hex
+        }
+        return new String(result);
     }
 }

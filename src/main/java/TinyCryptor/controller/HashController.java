@@ -3,10 +3,13 @@ package TinyCryptor.controller;
 import TinyCryptor.model.HashType;
 import TinyCryptor.model.Model;
 import TinyCryptor.model.hash.iHashAlgorithm;
+import TinyCryptor.utils.Utils;
 import TinyCryptor.view.View;
 import TinyCryptor.view.mainFrame.contentPanel.hashPanel.HashPanel;
+import TinyCryptor.view.subFrame.MessageFrame;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.Base64;
 
 public class HashController {
@@ -32,11 +35,16 @@ public class HashController {
         String mode = (String) panel.getTypeBox().getSelected();
         String spec = algorithm.trim() + mode;
         // in out info
-        String inputText = panel.getInputBox().getText();
+        byte[] inputText = panel.getInputBox().getText().getBytes("utf-8");
+        File inputFile = panel.getInputBox().getFile();
+        if (inputFile != null) {
+            inputText = Utils.readFile(inputFile);
+        }
         // process
         iHashAlgorithm hashAlgorithm = ((HashType) model.get("hash")).getAlgorithm(algorithm).setSpec(spec);
-        byte[] inputBytes = hashAlgorithm.encrypt(inputText.getBytes("utf-8"));
-        panel.getOutputBox().setText(new String(Base64.getEncoder().encode(inputBytes), "utf-8"));
+        byte[] cipherTxt = hashAlgorithm.encrypt(inputText);
+        panel.getOutputBox().setText(Utils.convertStringToHex(new String(cipherTxt, "utf-8")));
+        MessageFrame.create("Notification", "Run successfully!").setVisible(true);
     }
 
     public void drawHashPanel(HashPanel hashPanel) {

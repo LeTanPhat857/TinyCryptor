@@ -13,8 +13,8 @@ public class InOutPanel extends JPanel {
     public InOutPanel() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        plainInOutBoxPanel = new InOutBoxPanel("Input").hideFileProcessPanel();
-        cipherInOutBoxPanel = new InOutBoxPanel("Output (Base64)").blockTextArea().hideFileProcessPanel();
+        plainInOutBoxPanel = new InOutBoxPanel("Input");
+        cipherInOutBoxPanel = new InOutBoxPanel("Output (Hex)").blockTextArea().hideFileProcessPanel();
 
         this.add(plainInOutBoxPanel);
         this.add(cipherInOutBoxPanel);
