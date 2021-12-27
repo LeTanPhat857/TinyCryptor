@@ -2,6 +2,10 @@ package TinyCryptor.view.helper;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.basic.BasicComboBoxUI;
+import javax.swing.plaf.basic.BasicComboPopup;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.plaf.basic.ComboPopup;
 import java.awt.*;
 import java.util.List;
 

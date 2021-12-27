@@ -43,8 +43,8 @@ public class InOutBoxPanel extends RoundedPanel {
     private JScrollPane createScrollPane() {
         textArea = new JTextArea(5, 45);
         textArea.setLineWrap(true);
-        JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        return scrollPane;
+        textArea.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        return new RoundedScrollPane(textArea);
     }
 
     private JPanel createProcessPanel() {
@@ -63,7 +63,7 @@ public class InOutBoxPanel extends RoundedPanel {
         fileProcessPanel.setBorder(new EmptyBorder(3, 0, 3, 0));
 
         fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("choose file");
+        fileChooser.setDialogTitle("Choose file");
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Text Files (.txt)", "txt"));
         fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Key Files (.key)", "key"));
