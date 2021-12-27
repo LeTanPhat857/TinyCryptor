@@ -14,6 +14,7 @@ public class SymmetricPanel extends JPanel {
     // constructor
     public SymmetricPanel() {
         this.setName("symmetric");
+        this.setBackground(Color.WHITE);
         this.setLayout(new BorderLayout());
         inOutPanel = new InOutPanel();
         setUpPanel = new SetUpPanel();

@@ -14,6 +14,7 @@ public class HashPanel extends JPanel {
     // constructor
     public HashPanel() {
         this.setName("hash");
+        this.setBackground(Color.WHITE);
         this.setLayout(new BorderLayout());
         inOutPanel = new InOutPanel();
         setUpPanel = new SetUpPanel();

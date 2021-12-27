@@ -14,6 +14,7 @@ public class PBEPanel extends JPanel {
     // constructor
     public PBEPanel() {
         this.setName("pbe");
+        this.setBackground(Color.WHITE);
         this.setLayout(new BorderLayout());
         inOutPanel = new InOutPanel();
         setUpPanel = new SetUpPanel();

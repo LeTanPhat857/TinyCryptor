@@ -14,6 +14,7 @@ public class AsymmetricPanel extends JPanel {
     // constructor
     public AsymmetricPanel() {
         this.setName("asymmetric");
+        this.setBackground(Color.WHITE);
         this.setLayout(new BorderLayout());
         inOutPanel = new InOutPanel();
         setUpPanel = new SetUpPanel();
